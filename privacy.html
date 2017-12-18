@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)http://www.kidzooly.com/privacy.html -->
+<html lang="en" class="gr__kidzooly_com"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Nila Games - Kids and Gamings Apps</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="./privacy_files/bootstrap.min.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href="./privacy_files/css" rel="stylesheet" type="text/css">
+    <link href="./privacy_files/css(1)" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./privacy_files/font-awesome.min.css" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="./privacy_files/animate.min.css" type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./privacy_files/creative.css" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<script type="text/javascript">// Promises
+var _eid_promises = {};
+// Turn the incoming message from extension
+// into pending Promise resolving
+window.addEventListener("message", function(event) {
+    if(event.source !== window) return;
+    if(event.data.src && (event.data.src === "background.js")) {
+        console.log("Page received: ");
+        console.log(event.data);
+        // Get the promise
+        if(event.data.nonce) {
+            var p = _eid_promises[event.data.nonce];
+            // resolve
+            if(event.data.result === "ok") {
+                if(event.data.signature !== undefined) {
+                    p.resolve({hex: event.data.signature});
+                } else if(event.data.version !== undefined) {
+                    p.resolve(event.data.extension + "/" + event.data.version);
+                } else if(event.data.cert !== undefined) {
+                    p.resolve({hex: event.data.cert});
+                } else {
+                    console.log("No idea how to handle message");
+                    console.log(event.data);
+                }
+            } else {
+                // reject
+                p.reject(new Error(event.data.result));
+            }
+            delete _eid_promises[event.data.nonce];
+        } else {
+            console.log("No nonce in event msg");
+        }
+    }
+}, false);
+
+
+function TokenSigning() {
+    function nonce() {
+        var val = "";
+        var hex = "abcdefghijklmnopqrstuvwxyz0123456789";
+        for(var i = 0; i < 16; i++) val += hex.charAt(Math.floor(Math.random() * hex.length));
+        return val;
+    }
+
+    function messagePromise(msg) {
+        return new Promise(function(resolve, reject) {
+            // amend with necessary metadata
+            msg["nonce"] = nonce();
+            msg["src"] = "page.js";
+            // send message
+            window.postMessage(msg, "*");
+            // and store promise callbacks
+            _eid_promises[msg.nonce] = {
+                resolve: resolve,
+                reject: reject
+            };
+        });
+    }
+    this.getCertificate = function(options) {
+        var msg = {type: "CERT", lang: options.lang, filter: options.filter};
+        console.log("getCertificate()");
+        return messagePromise(msg);
+    };
+    this.sign = function(cert, hash, options) {
+        var msg = {type: "SIGN", cert: cert.hex, hash: hash.hex, hashtype: hash.type, lang: options.lang, info: options.info};
+        console.log("sign()");
+        return messagePromise(msg);
+    };
+    this.getVersion = function() {
+        console.log("getVersion()");
+        return messagePromise({
+            type: "VERSION"
+        });
+    };
+}</script></head>
+
+<body id="page-top" data-gr-c-s-loaded="true" style="">
+	<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="http://www.kidzooly.com/privacy.html#privacy">Privacy</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <section id="privacy">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Privacy Policy</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="text-left">
+				<p class="text-muted">Welcome! The privacy policy below is for Nila Games, (“Nila Games and apps”,"us” or "we"). We are devoted to handling any personal data obtained from you and protecting your privacy with respect and care. The Nila Games Privacy Policy is designed to give answer to your questions regarding how we collect, protect, use and share information gotten from the Nila Games website, WEBSITE (the "Site"), the Nila Games mobile application and other applications ("apps") that we operate and that link to this Privacy Policy (collectively, the "Services").</p>
+
+				<p class="text-muted">Before using the Services, we advise you to read this Policy and not to use if you disagree with any part of this Policy. You signify that you approve to the terms and conditions of this Policy by using the Services or ticking a box that states that you agree or accept this Policy.</p>
+
+				<h1>THE PRIVACY, APP, AND SUBSCRIPTION SERVICES CONTRACT</h1>
+
+				<h3>PERSONAL INFORMATION</h3>
+				<p class="text-muted">We do not perceptively gather any personal information from the APPS directed to children or any other APPs. Please contact us if you believe we have mistakenly collected such information so that we can resolve the issue.</p>
+
+				<h3>INFORMATION COLLECTED AUTOMATICALLY</h3>
+				<p class="text-muted">Automatic information is received and recorded to support the internal operations. Some of this information is gathered via third-party analytics tools. Internal operations include the following:</p>
+				<ul>
+				<ol><p class="text-muted">* to monitor metrics such as total number of installs, time spent, uninstalls.</p></ol>
+				<ol><p class="text-muted">* to understand which activities and services are most popular.</p></ol>
+				<ol><p class="text-muted">* to diagnose and fix technology problems, etc.</p></ol>
+				</ul>
+				<p class="text-muted">This information is collected and evaluated in aggregated form. This information is not sold with or without user consent.
+</p>
+				<h3>EMAILS RECEIVED FROM USERS
+</h3>
+				<p class="text-muted">We may keep certain information from users when they send us messages through our system or by email. We only use such information for providing support requested or the services.
+</p>
+
+
+				<h3>PURCHASING</h3>
+				<p class="text-muted"> Apps enable in-app purchases and Subscriptions for the parents. All the purchase options are guarded behind parents control available to parents in the app. All purchases occur via Apple gateway or Google play store. You are in charge of maintaining the security of such password as all in-app purchases may be made only upon entering the app store password.</p>
+
+				<h3>SOCIAL MEDIA</h3>
+				<p class="text-muted">Our child directed Apps won’t contain links to social media services. That is, the Apps will not feature links from social media Apps. Nila Games & Apps do not integrate any of the social media such as Twitter, Facebook or other online services in our Kids APPs. </p>
+
+				<h3>ADVERTISING</h3>
+				<p class="text-muted">Our free apps show third party advertisements in applications.  We are not delivering the interest-based and matured contents Ads. Please refer to our Ads partner <a href="https://www.appodeal.com/privacy-policy" target="_blank"><b>privacy policy</b></a></p>
+
+
+				<p class="text-muted">We encourage parents to upgrade to pro versions to remove the advertisement from the application.</p>
+
+
+
+				<h3>LOCATION</h3>
+				<p class="text-muted">Your precise geographic location is not used or collected by us from the child APPs. This information may be collected for the Advertisement purpose by other Mixed Audience APPs.</p>
+
+
+				<h3>CHANGES TO PRIVACY POLICY</h3>
+				<p class="text-muted">This policy may be modified or changed, and any changes to our Policy will become effective upon our posting of the revised Policy on the Site. Use of the Services following such changes constitutes your acceptance of the revised Policy then in effect.</p>
+
+				<h3>CONTACTING US</h3>
+				<p class="text-muted">If you have any inquiries about this Policy or the practices of the Services, please contact or write to us at
+ <a href="mailto:paramharrison@gmail.com">paramharrison@gmail.com</a>.</p>
+                </div>
+				  <section id="copyright">
+				<div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h5 class="section-heading">Copyright © Nila Games. Nila Games & Apps. All rights reserved.</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+            </div>
+        </div>
+    </section>
+
+    <!-- jQuery -->
+    <script src="./privacy_files/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="./privacy_files/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="./privacy_files/jquery.easing.min.js"></script>
+    <script src="./privacy_files/jquery.fittext.js"></script>
+    <script src="./privacy_files/wow.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="./privacy_files/creative.js"></script>
+
+
+
+
+</body></html>
