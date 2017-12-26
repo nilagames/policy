@@ -11,14 +11,10 @@
     <link rel="stylesheet" href="./privacy_files/bootstrap.min.css" type="text/css">
 
     <!-- Custom Fonts -->
-    <link href="./privacy_files/css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="./privacy_files/font-awesome.min.css" type="text/css">
 
     <!-- Plugin CSS -->
     <link rel="stylesheet" href="./privacy_files/animate.min.css" type="text/css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="./privacy_files/creative.css" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,101 +23,13 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<script type="text/javascript">// Promises
-var _eid_promises = {};
-// Turn the incoming message from extension
-// into pending Promise resolving
-window.addEventListener("message", function(event) {
-    if(event.source !== window) return;
-    if(event.data.src && (event.data.src === "background.js")) {
-        console.log("Page received: ");
-        console.log(event.data);
-        // Get the promise
-        if(event.data.nonce) {
-            var p = _eid_promises[event.data.nonce];
-            // resolve
-            if(event.data.result === "ok") {
-                if(event.data.signature !== undefined) {
-                    p.resolve({hex: event.data.signature});
-                } else if(event.data.version !== undefined) {
-                    p.resolve(event.data.extension + "/" + event.data.version);
-                } else if(event.data.cert !== undefined) {
-                    p.resolve({hex: event.data.cert});
-                } else {
-                    console.log("No idea how to handle message");
-                    console.log(event.data);
-                }
-            } else {
-                // reject
-                p.reject(new Error(event.data.result));
-            }
-            delete _eid_promises[event.data.nonce];
-        } else {
-            console.log("No nonce in event msg");
-        }
-    }
-}, false);
 
-
-function TokenSigning() {
-    function nonce() {
-        var val = "";
-        var hex = "abcdefghijklmnopqrstuvwxyz0123456789";
-        for(var i = 0; i < 16; i++) val += hex.charAt(Math.floor(Math.random() * hex.length));
-        return val;
-    }
-
-    function messagePromise(msg) {
-        return new Promise(function(resolve, reject) {
-            // amend with necessary metadata
-            msg["nonce"] = nonce();
-            msg["src"] = "page.js";
-            // send message
-            window.postMessage(msg, "*");
-            // and store promise callbacks
-            _eid_promises[msg.nonce] = {
-                resolve: resolve,
-                reject: reject
-            };
-        });
-    }
-    this.getCertificate = function(options) {
-        var msg = {type: "CERT", lang: options.lang, filter: options.filter};
-        console.log("getCertificate()");
-        return messagePromise(msg);
-    };
-    this.sign = function(cert, hash, options) {
-        var msg = {type: "SIGN", cert: cert.hex, hash: hash.hex, hashtype: hash.type, lang: options.lang, info: options.info};
-        console.log("sign()");
-        return messagePromise(msg);
-    };
-    this.getVersion = function() {
-        console.log("getVersion()");
-        return messagePromise({
-            type: "VERSION"
-        });
-    };
-}</script></head>
+</head>
 
 <body id="page-top" data-gr-c-s-loaded="true" style="">
-	<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-
     <section id="privacy">
         <div class="container">
-            <div class="row">
+            <div class="clearfix">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Privacy Policy</h2>
                     <hr class="primary">
@@ -129,7 +37,7 @@ function TokenSigning() {
             </div>
         </div>
         <div class="container">
-            <div class="row">
+            <div class="clearfix">
                 <div class="text-left">
 				<p class="text-muted">Welcome! The privacy policy below is for Nila Games, (“Nila Games and apps”,"us” or "we"). We are devoted to handling any personal data obtained from you and protecting your privacy with respect and care. The Nila Games Privacy Policy is designed to give answer to your questions regarding how we collect, protect, use and share information gotten from the Nila Games website, WEBSITE (the "Site"), the Nila Games mobile application and other applications ("apps") that we operate and that link to this Privacy Policy (collectively, the "Services").</p>
 
@@ -182,7 +90,7 @@ function TokenSigning() {
                 </div>
 				  <section id="copyright">
 				<div class="container">
-            <div class="row">
+            <div class="clearfix">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h5 class="section-heading">Copyright © Nila Games. Nila Games & Apps. All rights reserved.</h5>
                 </div>
@@ -198,16 +106,7 @@ function TokenSigning() {
 
     <!-- Bootstrap Core JavaScript -->
     <script src="./privacy_files/bootstrap.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="./privacy_files/jquery.easing.min.js"></script>
-    <script src="./privacy_files/jquery.fittext.js"></script>
     <script src="./privacy_files/wow.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="./privacy_files/creative.js"></script>
-
-
 
 
 </body></html>
